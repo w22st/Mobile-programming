@@ -14,10 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     Chronometer chrono;
-    RadioButton rCal, rTime;
-    DatePicker dPicker;
-    TimePicker tPicker;
-    TextView tView;
+    RadioButton rdoCal, rdoTime;
+    DatePicker datePicker;
+    TimePicker timePicker;
+    TextView tvYear, tvMonth, tvDay, tvHour, tvMinute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,54 +26,70 @@ public class MainActivity extends AppCompatActivity {
         setTitle("시간 예약");
 
         chrono = findViewById(R.id.chronometer);
-        rCal = findViewById(R.id.rCal);
-        rTime = findViewById(R.id.rTime);
-        dPicker = findViewById(R.id.dPicker);
-        tPicker = findViewById(R.id.tPicker);
-        tView = findViewById(R.id.tView);
+        rdoCal = findViewById(R.id.rdoCal);
+        rdoTime = findViewById(R.id.rdoTime);
+        datePicker = findViewById(R.id.datePicker);
+        timePicker = findViewById(R.id.timePicker);
+        tvYear = (TextView) findViewById(R.id.tvYear);
+        tvMonth = (TextView) findViewById(R.id.tvMonth);
+        tvDay = (TextView) findViewById(R.id.tvDay);
+        tvHour = (TextView) findViewById(R.id.tvHour);
+        tvMinute = (TextView) findViewById(R.id.tvMinute);
 
-        tPicker.setVisibility(View.INVISIBLE);
-        dPicker.setVisibility(View.INVISIBLE);
+        rdoCal.setVisibility(View.INVISIBLE);
+        rdoTime.setVisibility(View.INVISIBLE);
+        timePicker.setVisibility(View.INVISIBLE);
+        datePicker.setVisibility(View.INVISIBLE);
 
-        rCal.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                tPicker.setVisibility(View.INVISIBLE);
-                dPicker.setVisibility(View.VISIBLE);
+        rdoCal.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                timePicker.setVisibility(View.INVISIBLE);
+                datePicker.setVisibility(View.VISIBLE);
             }
         });
-        rTime.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                tPicker.setVisibility(View.VISIBLE);
-                dPicker.setVisibility(View.INVISIBLE);
+
+        rdoTime.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                timePicker.setVisibility(View.VISIBLE);
+                datePicker.setVisibility(View.INVISIBLE);
             }
         });
 
-        chrono.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        chrono.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
                 chrono.setBase(SystemClock.elapsedRealtime());
                 chrono.start();
                 chrono.setTextColor(Color.RED);
-
-                rCal.setVisibility(View.VISIBLE);
-                rTime.setVisibility(View.VISIBLE);
+                rdoCal.setVisibility(View.VISIBLE);
+                rdoTime.setVisibility(View.VISIBLE);
             }
         });
 
-        tView.setOnLongClickListener(new View.OnLongClickListener() {
+        tvYear.setOnLongClickListener(new View.OnLongClickListener()
+        {
             @Override
-            public boolean onLongClick(View v) {
+            public boolean onLongClick(View view)
+            {
                 chrono.stop();
                 chrono.setTextColor(Color.BLUE);
 
-                String dateStr = dPicker.getYear() + "년" + (dPicker.getMonth() + 1) + "월" +
-                        dPicker.getDayOfMonth() + "일" + tPicker.getCurrentHour() + "시" +
-                        tPicker.getCurrentMinute() + "분" + " 예약됨";
-                tView.setText(dateStr);
+                tvYear.setText(Integer.toString(datePicker.getYear()));
+                tvMonth.setText(Integer.toString((datePicker.getMonth() + 1)));
+                tvDay.setText(Integer.toString(datePicker.getDayOfMonth()));
 
-                rCal.setVisibility(View.INVISIBLE);
-                rTime.setVisibility(View.INVISIBLE);
-                tPicker.setVisibility(View.INVISIBLE);
-                tPicker.setVisibility(View.INVISIBLE);
+                tvHour.setText(Integer.toString(timePicker.getCurrentHour()));
+                tvMinute.setText(Integer.toString(timePicker.getCurrentMinute()));
+
+                rdoCal.setVisibility(View.INVISIBLE);
+                rdoTime.setVisibility(View.INVISIBLE);
+                timePicker.setVisibility(View.INVISIBLE);
+                datePicker.setVisibility(View.INVISIBLE);
                 return false;
             }
         });
